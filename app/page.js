@@ -1,16 +1,5 @@
-import Modal from '@/Components/Modal'
-import Nav_Slider from '@/Components/Nav_Slider'
-import Navbar from '@/Components/Navbar'
-import React from 'react'
+import HomePage from '@/Components/HomePage'
 
-const page = () => {
-  return (
-   <>
-  
-   <Nav_Slider/>
-   {/* <HoverCard/> */}
-   </>
-  )
+export default function Home() {
+  return <HomePage countryFromURL="uae" />;
 }
-
-export default page

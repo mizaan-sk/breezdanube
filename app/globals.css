@@ -25,10 +25,11 @@ body {
   color: var(--foreground);
   font-family: 'Oswald', sans-serif;
 }
-/* globals.css */
-.triangle-up {
+.clip-bottom {
   clip-path: polygon(0 0, 100% 0, 100% 85%, 50% 100%, 0 85%);
 }
+
+
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -43,6 +44,8 @@ body {
 }
 .react-international-phone-country-selector-button {
   border: none !important;
-  box-shadow: none !important; /* optional: remove focus outline */
+  box-shadow: none !important; 
 }
-
+.locat_bg{
+  background-color: white;
+}

@@ -7,34 +7,28 @@ import { PhoneInput } from "react-international-phone";
 import "react-international-phone/style.css";
 import { FaUser, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import Image from "next/image";
-
-export default function Modal({ onClose }) {
-  const [urlParams, setUrlParams] = useState({
-    utm_ad: "",
-    utm_placement: "",
-    gclid: "",
-    fbclid: "",
-  });
-
+import { useRouter } from "next/navigation";
+export default function Modal({ onClose,isOpen }) {
+  const [trackingParams, setTrackingParams] = useState({});
   const [status, setStatus] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
       const query = new URLSearchParams(window.location.search);
-      const params = {
-        utm_ad: query.get("utm_ad") || "",
-        utm_placement: query.get("utm_placement") || "",
-        gclid: query.get("gclid") || "",
-        fbclid: query.get("fbclid") || "",
-      };
-      setUrlParams(params);
-      Object.entries(params).forEach(([key, value]) => {
-        if (value) localStorage.setItem(key, value);
+      const keys = [
+        "utm_source", "utm_ad", "utm_campaign", "utm_placement",
+        "utm_keyword", "gclid", "fbclid"
+      ];
+      const extracted = {};
+      keys.forEach((key) => {
+        extracted[key] = query.get(key) || localStorage.getItem(key) || "";
+        if (extracted[key]) localStorage.setItem(key, extracted[key]);
       });
+      setTrackingParams(extracted);
     }
   }, []);
-
+  const router = useRouter();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -46,50 +40,71 @@ export default function Modal({ onClose }) {
       phone: Yup.string()
         .required("Phone number is required")
         .matches(/^\+\d{10,15}$/, "Phone Number is required"),
-      email: Yup.string()
-        .email("Invalid email address")
-        .required("Email is required"),
+      email: Yup.string().email("Invalid email").required("Email is required"),
     }),
     onSubmit: async (values, { resetForm }) => {
       setIsSubmitting(true);
       setStatus("Submitting...");
 
-      const formData = {
-        ...values,
-        utm_ad: urlParams.utm_ad || localStorage.getItem("utm_ad") || "",
-        utm_placement:
-          urlParams.utm_placement || localStorage.getItem("utm_placement") || "",
-        gclid: urlParams.gclid || localStorage.getItem("gclid") || "",
-        fbclid: urlParams.fbclid || localStorage.getItem("fbclid") || "",
+      const fullData = {
+        name: values.name,
+        mobile: values.phone,
+        email: values.email,
+        ...trackingParams,
       };
 
-      const body = new URLSearchParams();
-      Object.entries(formData).forEach(([key, val]) => {
-        body.append(key, val);
-      });
-
       try {
-        await fetch("", {
-          method: "POST",
-          mode: "no-cors",
-          headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-          },
-          body: body.toString(),
-        });
+        // 1. Submit to Google Apps Script
+        await fetch(
+          "https://script.google.com/macros/s/AKfycbzyV65VjevZ4lxvEFE_JmhT4PUMjVq79Te524VR4so_wxe49wiT7qec107J3AGcI_VL/exec",
+          {
+            method: "POST",
+            body: JSON.stringify(fullData),
+          }
+        );
 
-        setStatus("Form submitted successfully!");
+        // 2. Submit to CRM
+        const crmResponse = await fetch(
+          "https://api.cparamount.com/leads/web-hook/campaigns?access_token=YUFZVDMSFFQKNDYWZKRLYBDIA",
+          {
+            method: "POST",
+            headers: {
+              Accept: "*/*",
+              "User-Agent": "Thunder Client",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: fullData.name,
+              mobile: fullData.mobile,
+              email: fullData.email,
+              source: fullData.utm_source || "Google",
+              campaign: fullData.utm_campaign || "",
+              notes: `
+UTM Source: ${fullData.utm_source || ""}
+UTM Campaign: ${fullData.utm_campaign || ""}
+UTM Ad: ${fullData.utm_ad || ""}
+UTM Placement: ${fullData.utm_placement || ""}
+GCLID: ${fullData.gclid || ""}
+FBCLID: ${fullData.fbclid || ""}
+UTM Keywords: ${fullData.utm_keyword || ""}`,
+            }),
+          }
+        );
+
+        const crmJson = await crmResponse.json();
+        console.log("CRM Response", crmJson);
         resetForm();
+       router.push("/thankyou");
         setTimeout(onClose, 2000);
-      } catch (error) {
-        console.error("Error submitting form", error);
+      } catch (err) {
+        console.error("Submission Error", err);
         setStatus("Something went wrong. Please try again.");
       } finally {
         setIsSubmitting(false);
       }
     },
   });
-
+if (!isOpen) return null;
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
@@ -113,7 +128,7 @@ export default function Modal({ onClose }) {
 
         {/* Top Logo */}
         <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-md">
-          <Image src="/assets/Kub_logo.png" alt="Logo" width={40} height={40} />
+          <Image src="/assets/Banner_Logo.webp" alt="Logo" width={40} height={40} />
         </div>
 
         <div className="mt-5 text-center">

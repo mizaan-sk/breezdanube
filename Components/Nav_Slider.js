@@ -1,5 +1,4 @@
 "use client";
-
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -7,104 +6,150 @@ import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Navbar from "./Navbar";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
-const Images_Slider = [
-  { src: "/assets/slide1.jpg" },
-  { src: "/assets/slide2.jpg" },
+const Desktop_Slider = [
+  { src: "/assets/WebBan4.webp", alt: 'slide1' },
+  { src: "/assets/WebBan2.webp", alt: 'slide2' },
+  { src: "/assets/WebBan3.webp", alt: 'slide3' },
+  { src: "/assets/WebBan1.webp", alt: 'slide4' },
+];
+
+const Mobile_Slider = [
+  { src: "/assets/MobBan1.webp", alt: 'slide5' },
+  { src: "/assets/MobBan2.webp", alt: 'slide6' },
+  { src: "/assets/MobBan3.webp", alt: 'slide7' },
+  { src: "/assets/MobBan4.webp", alt: 'slide8' },
 ];
 
 export default function Nav_Slider() {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
   const paginationRef = useRef(null);
+  const [isMounted, setIsMounted] = useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+  const desktopSwiperRef = useRef(null);
+  const mobileSwiperRef = useRef(null);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const getExpandedSlides = (slides) => {
+    return [...slides, ...slides, ...slides, ...slides];
+  };
+
+  // Handle image load and update swiper
+  const handleImageLoad = () => {
+    // Small delay to ensure all images are processed
+    setTimeout(() => {
+      if (desktopSwiperRef.current?.swiper) {
+        desktopSwiperRef.current.swiper.update();
+      }
+      if (mobileSwiperRef.current?.swiper) {
+        mobileSwiperRef.current.swiper.update();
+      }
+      setImagesLoaded(true);
+    }, 100);
+  };
 
   return (
-    <div className="relative w-full h-screen">
-      {/* Navbar OVER Swiper */}
+    <div className="relative w-full overflow-hidden">
+      {/* Navbar ABOVE Swiper */}
       <div className="absolute top-0 left-0 w-full z-30">
         <Navbar />
       </div>
 
-      {/* Custom Navigation Buttons */}
-      <button
-        ref={prevRef}
-        className="absolute border-0 outline-0 z-20 top-1/2 left-1 md:left-5 lg:left-10 text-2xl md:text-5xl text-[#f6f8f770] cursor-pointer hover:text-white font-black -translate-y-1/2"
-      >
-        <IoIosArrowBack />
-      </button>
-      <button
-        ref={nextRef}
-        className="absolute border-0 outline-0 z-20 top-1/2 right-1 md:right-5 lg:right-10 text-2xl md:text-5xl text-[#f6f8f770] cursor-pointer hover:text-white font-bold -translate-y-1/2"
-      >
-        <IoIosArrowForward />
-      </button>
+      {/* === DESKTOP SLIDER === */}
+      {isMounted && (
+        <div className="hidden md:block">
+          {/* Aspect ratio container to prevent layout shift */}
+          <div className="relative w-full " style={{ aspectRatio: '18.7/9' }}>
+            <Swiper
+              ref={desktopSwiperRef}
+              slidesPerView={1}
+              spaceBetween={0}
+              loop={false}
+              speed={800}
+              watchSlidesProgress={true}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+              allowTouchMove={false}
+              simulateTouch={false}
+              modules={[Autoplay]}
+              className="mySwiper desktop-swiper absolute inset-0"
+              style={{ height: '100%', width: '100%' }}
+            >
+              {getExpandedSlides(Desktop_Slider).map((item, idx) => (
+                <SwiperSlide key={`desktop-${idx}`}>
+                  <div className="relative w-full h-full">
+                    <Image
+                    src={item.src}
+                    alt={item.alt}
+                    width={1920}
+                    height={1080} // Set appropriate aspect ratio
+                    priority={idx < 2}
+                    className="w-full h-auto object-cover" // Changed to h-auto
+                    style={{ display: 'block' }} // Ensure proper display
+                  />
+                  </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        </div>
+      )}
 
-      {/* Custom Pagination Dots */}
-      <div
-        ref={paginationRef}
-        className="absolute bottom-10 z-100 left-1/2 text-white -translate-x-1/2"
-      ></div>
+      {/* === MOBILE SLIDER === */}
+      <div className="block md:hidden">
+        {/* Aspect ratio container for mobile */}
+        <div className="relative w-full">
+          <Swiper
+            ref={mobileSwiperRef}
+            slidesPerView={1}
+            spaceBetween={0}
+            loop={false}
+            speed={800}
+            watchSlidesProgress={true}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+            allowTouchMove={false}
+            simulateTouch={false}
+            modules={[Autoplay]}
+            className="mySwiper mobile-swiper absolute inset-0"
+            style={{ height: '100%', width: '100%' }}
+          >
+            {getExpandedSlides(Mobile_Slider).map((item, idx) => (
+              <SwiperSlide key={`mobile-${idx}`}>
+                <div className="relative w-full h-full">
+                  <Image
+                  src={item.src}
+                  alt={item.alt}
+                  width={768} // Appropriate mobile width
+                  height={500} // Appropriate mobile height
+                  priority={idx < 2}
+                  className="w-full h-auto object-cover" // Changed to h-auto
+                  style={{ display: 'block' }} // Ensure proper display
+                />
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </div>
 
-      {/* Swiper */}
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        slidesPerView={1}
-        loop
-        autoplay={{ delay: 5000 }}
-        navigation={{
-          prevEl: prevRef.current,
-          nextEl: nextRef.current,
-        }}
-        pagination={{
-          el: paginationRef.current,
-          clickable: true,
-          renderBullet: function (index, className) {
-            return `<span class="${className} w-3 h-3 bg-white opacity-40 inline-block rounded-full mx-1"></span>`;
-          },
-          bulletActiveClass: "opacity-100",
-        }}
-        onBeforeInit={(swiper) => {
-          swiper.params.navigation.prevEl = prevRef.current;
-          swiper.params.navigation.nextEl = nextRef.current;
-          swiper.params.pagination.el = paginationRef.current;
-        }}
-      >
-        {Images_Slider.map((item, idx) => (
-          <SwiperSlide key={idx} className="relative">
-            {/* Background Image */}
-            <Image
-              src={item.src}
-              alt={`slide-${idx + 1}`}
-              width={1200}
-              height={600}
-              className="w-full  h-screen object-cover"
-              priority // load first
-            />
-
-            {/* Overlay Content */}
-            <div className="absolute inset-0 z-10 flex  md:mt-0 mt-15 flex-col items-center justify-center text-white text-center">
-              {/* Text */}
-              <h2
-                className="text-white text-2xl md:text-4xl font-medium px-4 -mb-49 md:-mb-36 fade-in  md:mt-40 z-10"
-                style={{ animationDelay: "0.5s" }}
-              >
-                A REGAL TALE OF THE BARONIAL PRECINCT
-              </h2>
-              <Image
-                src="/assets/sliderLogo.png"
-                alt="Logo"
-                width={320}
-                height={250}
-                className="md:-mt-15 mt-19  w-[150px] md:w-[300px] z-0 fade-in"
-                style={{ animationDelay: "1.5s" }}
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+      {/* Loading skeleton/placeholder */}
+      {!imagesLoaded && (
+        <div className="absolute inset-0 bg-gray-200 animate-pulse">
+          <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
+        </div>
+      )}
     </div>
   );
 }

@@ -17,6 +17,7 @@ import Modal from './Modal'
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { pageview } from '@/lib/gtm'
+import EnquireNowButton from './EnquireNowButton'
 const HomePage = ({ countryFromURL }) => {
 const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,6 +48,7 @@ const pathname = usePathname();
       <div><AboutAbove /></div>
       <div id="about"><About /></div>
       <div id="contact"><ContactUs countryFromURL={countryFromURL}/></div>
+      <div><EnquireNowButton countryFromURL={countryFromURL}/></div>
       <div>
         <Modal countryFromURL={countryFromURL} isOpen={isModalOpen}
       onClose={() => setIsModalOpen(false)} />

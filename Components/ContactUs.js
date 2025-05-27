@@ -4,16 +4,21 @@ import Image from "next/image";
 import { FaUser, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { useRouter } from "next/navigation";
-import { PhoneInput } from "react-international-phone";
+import { useRouter, usePathname } from "next/navigation";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+
 const ContactSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   mobile: Yup.string()
-    .required("Mobile number is required"),
+    .required("Phone number is required")
+    .test("is-valid-phone", "Phone number is invalid", (value) => {
+      const digitsOnly = value.replace(/\D/g, ""); // remove non-digits
+      return digitsOnly.length >= 10 && digitsOnly.length <= 15;
+    }),
   email: Yup.string().email("Invalid email").required("Email is required"),
 });
 
-// Extract UTM and tracking params from URL
 const extractTrackingParams = () => {
   if (typeof window === "undefined") return {};
   const urlParams = new URLSearchParams(window.location.search);
@@ -28,9 +33,40 @@ const extractTrackingParams = () => {
   };
 };
 
-export default function ContactForm() {
+export default function ContactForm({ countryFromURL }) {
   const [trackingParams, setTrackingParams] = useState({});
+  const [phoneCountry, setPhoneCountry] = useState("ae");
   const router = useRouter();
+  const pathname = usePathname();
+
+  const countryCodeMap = {
+    canada: "ca",
+    usa: "us",
+    india: "in",
+    dubai: "ae",
+    uae: "ae",
+    uk: "gb",
+    london: "gb",
+    birhim: "bh",
+    birmingham: "gb",
+    france: "fr",
+    paris: "fr",
+    germany: "de",
+  };
+
+  const getPhoneCountryCode = (country) => {
+    return countryCodeMap[country?.toLowerCase()] || "ae";
+  };
+
+  const getCountryFromPath = () => {
+    const segments = pathname.split("/").filter(Boolean);
+    return segments[0] || countryFromURL || "ae";
+  };
+
+  useEffect(() => {
+    const countryFromPath = getCountryFromPath();
+    setPhoneCountry(getPhoneCountryCode(countryFromPath));
+  }, [pathname, countryFromURL]);
 
   useEffect(() => {
     const params = extractTrackingParams();
@@ -41,7 +77,6 @@ export default function ContactForm() {
     const payload = { ...values, ...trackingParams };
 
     try {
-      // Send to Google Apps Script
       await fetch(
         "https://script.google.com/macros/s/AKfycbzyV65VjevZ4lxvEFE_JmhT4PUMjVq79Te524VR4so_wxe49wiT7qec107J3AGcI_VL/exec",
         {
@@ -50,7 +85,6 @@ export default function ContactForm() {
         }
       );
 
-      // Extract individual fields
       const {
         name,
         mobile,
@@ -64,8 +98,7 @@ export default function ContactForm() {
         fbclid,
       } = payload;
 
-      // Send to CRM API with updated URL and structure
-      const response = await fetch(
+      await fetch(
         "https://api.cparamount.com/leads/web-hook/campaigns?access_token=YUFZVDMSFFQKNDYWZKRLYBDIA",
         {
           method: "POST",
@@ -92,16 +125,14 @@ UTM Keywords: ${utm_keyword || ""}`,
         }
       );
 
-      const data = await response.json();
-      console.log("CRM Response:", data);
-
       resetForm();
-          router.push("/thankyou");
+      router.push("/thankyou");
     } catch (err) {
       console.error("Form submission error:", err);
       alert("There was an error submitting the form.");
     }
   };
+
   return (
     <div
       className="relative bg-cover bg-center"
@@ -131,105 +162,112 @@ UTM Keywords: ${utm_keyword || ""}`,
             name: "",
             mobile: "",
             email: "",
-            utm_source: "",
-            utm_ad: "",
-            utm_campaign: "",
-            utm_placement: "",
-            utm_keyword: "",
-            gclid: "",
-            fbclid: "",
+            ...trackingParams,
           }}
           validationSchema={ContactSchema}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting, setFieldValue }) => {
-            // eslint-disable-next-line react-hooks/rules-of-hooks
-            useEffect(() => {
-              Object.entries(trackingParams).forEach(([key, value]) => {
-                setFieldValue(key, value);
-              });
-            }, [setFieldValue]);
-
-            return (
-              <Form className="w-full max-w-4xl space-y-6">
-                <div className="flex flex-col md:flex-row gap-4">
-                  <div className="relative flex-1">
-                    <FaUser className="absolute top-4 left-3 text-[#B18613]" />
-                    <Field
-                      name="name"
-                      type="text"
-                      placeholder="Name"
-                      className="pl-10 py-3 w-full rounded-md bg-white text-black outline-none"
-                    />
-                    <ErrorMessage
-                      name="name"
-                      component="div"
-                      className="text-red-400 text-sm mt-1"
-                    />
-                  </div>
-
-                  <div className="relative flex-1">
-                    <div className="flex items-center bg-white rounded-md border overflow-visible px-3 py-1">
-                      <FaPhoneAlt className="text-[#D2A23A] mr-2" />
-                      <Field name="mobile">
-                        {({ field, form }) => (
-                          <PhoneInput
-                            defaultCountry="ae"
-                            value={field.value}
-                            onChange={(phone) =>
-                              form.setFieldValue("mobile", phone)
-                            }
-                            onBlur={() => form.setFieldTouched("mobile", true)}
-                            inputClassName="!w-full !text-base !rounded-md !px-2 !border-0 focus:outline-none"
-                            className="!w-full !border-0 !text-gray-600"
-                            buttonClass="!border-0 !bg-transparent"
-                          />
-                        )}
-                      </Field>
-                    </div>
-                    <ErrorMessage
-                      name="mobile"
-                      component="div"
-                      className="text-red-400 text-sm mt-1"
-                    />
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <FaEnvelope className="absolute top-4 left-3 text-[#B18613]" />
+          {({ isSubmitting, setFieldValue, values }) => (
+            <Form className="w-full max-w-4xl space-y-6">
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="relative flex-1">
+                  <FaUser className="absolute top-4 left-3 text-[#B18613]" />
                   <Field
-                    name="email"
-                    type="email"
-                    placeholder="Email"
+                    name="name"
+                    type="text"
+                    placeholder="Name"
                     className="pl-10 py-3 w-full rounded-md bg-white text-black outline-none"
                   />
                   <ErrorMessage
-                    name="email"
+                    name="name"
                     component="div"
                     className="text-red-400 text-sm mt-1"
                   />
                 </div>
 
-                {/* Hidden fields for tracking */}
-                {Object.keys(trackingParams).map((key) => (
-                  <Field key={key} type="hidden" name={key} />
-                ))}
-
-                <div className="flex flex-col items-center">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="bg-[#CAAD5E] cursor-pointer text-white font-medium px-6 py-2 rounded-md tracking-widest hover:bg-[#b8a675] transition"
-                  >
-                    {isSubmitting ? "Submitting..." : "SUBMIT"}
-                  </button>
-                  <p className="mt-4 text-xl font-bold">
-                    Call: <span className="text-yellow-400">022-000000000</span>
-                  </p>
+                <div className="relative flex-1">
+                  <div className="flex items-center bg-white text-black rounded-md border px-3 py-[5.5px]">
+                    <FaPhoneAlt className="text-[#D2A23A] mr-2" />
+                    <PhoneInput
+                      country={phoneCountry}
+                      value={values.mobile}
+                      onChange={(phone) => setFieldValue("mobile", phone)}
+                      inputStyle={{
+                        width: "100%",
+                        fontSize: "1rem",
+                        border: "none",
+                        fontWeight: "400",
+                        fontFamily: "oswald",
+                        background: "transparent",
+                        boxShadow: "none",
+                        color: "black",
+                      }}
+                      buttonStyle={{
+                        border: "none",
+                        background: "transparent",
+                      }}
+                      containerStyle={{
+                        flex: 1,
+                        background: "transparent",
+                        border: "none",
+                      }}
+                      enableSearch
+                      disableAreaCodes={true}
+                      enableLongNumbers={true}
+                      isValid={(value, country) => {
+                        const digits = value.replace(/\D/g, "");
+                        return digits.length >= 10 && digits.length <= 15;
+                      }}
+                    />
+                  </div>
+                  <ErrorMessage
+                    name="mobile"
+                    component="div"
+                    className="text-red-400 text-sm mt-1"
+                  />
                 </div>
-              </Form>
-            );
-          }}
+              </div>
+
+              <div className="relative">
+                <FaEnvelope className="absolute top-4 left-3 text-[#B18613]" />
+                <Field
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  className="pl-10 py-3 w-full rounded-md bg-white text-black outline-none"
+                />
+                <ErrorMessage
+                  name="email"
+                  component="div"
+                  className="text-red-400 text-sm mt-1"
+                />
+              </div>
+
+              {/* Hidden fields for tracking */}
+              {Object.keys(trackingParams).map((key) => (
+                <Field
+                  key={key}
+                  type="hidden"
+                  name={key}
+                  value={trackingParams[key]}
+                />
+              ))}
+
+              <div className="flex flex-col items-center">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-[#CAAD5E] cursor-pointer text-white font-medium px-6 py-2 rounded-md tracking-widest hover:bg-[#b8a675] transition"
+                >
+                  {isSubmitting ? "Submitting..." : "SUBMIT"}
+                </button>
+                <p className="mt-4 text-xl font-bold">
+                  Call :{" "}
+                  <span className="text-yellow-400">+971 56 531 1811</span>
+                </p>
+              </div>
+            </Form>
+          )}
         </Formik>
       </div>
     </div>

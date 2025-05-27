@@ -10,14 +10,14 @@ const AmentiesBelowSlider = () => {
     {
       title: "SAVOUR LIFE LIKE ROYALTY",
       description:
-        "Sheikh Zayed Road embodies the spirit of Dubai’s growth. Flanked by towering landmarks, it seamlessly links key destinations such as Downtown Dubai, Dubai Marina and Dubai International Financial Centre...",
+        "Sheikh Zayed Road at your doorstep. Within walking distance of the Jebel Ali Metro Station. Fast access to Dubai Marina, Al Khail, Downtown, DIFC, and beyond. This is a location that moves with you—no detours, no delays. Whether it’s the morning rush, a late-night grocery run, or weekend plans across town, every direction feels effortless. All paths point to Sobha Central.",
       mainImage: "/assets/02.webp",
       thumbImage: "/assets/02.webp",
     },
     {
       title: "ELEGANT ENTERTAINING SPACES",
       description:
-        "Residing on Sheikh Zayed Road is synonymous with experiencing Dubai’s dynamic rhythm firsthand. With an array of dining, shopping and entertainment options...",
+        "Residing on Sheikh Zayed Road is synonymous with experiencing Dubai’s dynamic rhythm firsthand. With an array of dining, shopping and entertainment options, sophistication and convenience blends harmoniously. Life on this iconic address guarantees an exhilarating and enriched life.",
       mainImage: "/assets/07.webp",
       thumbImage: "/assets/07.webp",
     },
@@ -56,19 +56,19 @@ const AmentiesBelowSlider = () => {
 
   return (
     <div className="w-full bg-gray-50">
-      <div className="flex flex-col lg:flex-row h-full min-h-screen">
+      <div className="flex flex-col lg:flex-row h-full  md:min-h-screen">
         {/* Left Content */}
-        <div className="flex flex-col justify-center flex-1 p-6 sm:p-10 lg:p-16 bg-white relative">
+        <div className="flex flex-col justify-center flex-1 md:py-0 py-7 p-2 sm:p-10 lg:p-16 bg-white relative">
           <div className="max-w-xl mx-auto">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-light text-gray-800 mb-6">
               {slides[currentSlide].title}
             </h2>
-            <p className="text-gray-600 text-sm sm:text-base lg:text-lg mb-6">
+            <p className="text-gray-600 text-lg lg:text-lg mb-6">
               {slides[currentSlide].description}
             </p>
 
             {/* Dots */}
-            <div className="flex space-x-3 mb-6">
+            <div className="flex space-x-3 mb-6 lg:justify-start items-center justify-center">
               {slides.map((_, index) => (
                 <button
                   key={index}
@@ -81,7 +81,7 @@ const AmentiesBelowSlider = () => {
             </div>
 
             {/* Arrows - Mobile only */}
-            <div className="flex gap-4 lg:hidden">
+            <div className="flex gap-4 lg:hidden items-center  justify-center">
               <button
                 onClick={prevSlide}
                 className="w-10 h-10 bg-gray-200 hover:bg-gray-300 rounded-full flex items-center justify-center"

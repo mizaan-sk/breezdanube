@@ -6,7 +6,7 @@ const page = () => {
   return (
     <>
         <Navbar/>
-    <div style={{ minHeight: '82vh' }} className="flex items-center absoulte top-0 z-100 justify-center bg-white text-black p-4">
+    <div style={{ minHeight: '90vh' }} className="flex items-center absoulte top-0 z-100 justify-center bg-white text-black p-4">
       <div className="text-center">
         <div className="bg-black p-4 rounded-full w-16 h-16 mx-auto mb-6">
           <span className="text-white text-3xl font-bold">✔</span>

@@ -53,6 +53,7 @@ const Configuration = () => {
                 <p className="md:text-4xl text-2xl text-[#B1913D] font-medium">
                   {item.area}
                 </p>
+                <button className="check-price-btn">Check Price</button>
                 <div className="triangle"></div>
               </div>
               <div className="btn" onClick={() => setModalOpen(true)}>
@@ -113,9 +114,10 @@ const Configuration = () => {
             justify-content: space-between;
             background: #fff;
             height: 45%;
+            gap:5px;
             width: 100%;
             text-align: center;
-            padding: 40px 0 0;
+            padding: 20px 0 0;
             z-index: 4;
             transition: all 0.25s;
             border-radius: 0 0 12px 12px;
@@ -145,6 +147,29 @@ const Configuration = () => {
           }
 
           .card:hover .text p {
+            opacity: 0;
+          }
+
+          .check-price-btn {
+            background-color: #b1913d;
+            color: white;
+            padding: 6px 10px;
+            margin-top: 8px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+              letter-spacing: 1px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: background-color 0.3s ease, opacity 0.25s;
+            z-index: 5;
+          }
+
+          .check-price-btn:hover {
+            background-color: #d5b156;
+          }
+
+          .card:hover .check-price-btn {
             opacity: 0;
           }
 
@@ -186,28 +211,14 @@ const Configuration = () => {
 
           @media (max-width: 900px) {
             .card {
-              width: 45vw;
-              max-width: 300px;
+              width:100%
               height: 450px;
             }
           }
-
-          @media (max-width: 560px) {
+             @media (max-width:768px) {
             .card {
-              width: 100%;
-              height: 430px;
-            }
-
-            .text {
-              padding: 20px 0 0;
-              height: 40%;
-            }
-          }
-
-          @media (max-width: 480px) {
-            .card {
-              width: 100%;
-              height: 400px;
+              width:100%
+              height: 350px;
             }
           }
         `}</style>

@@ -18,6 +18,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { pageview } from '@/lib/gtm'
 import EnquireNowButton from './EnquireNowButton'
+import BigImage from './BigImage'
 const HomePage = ({ countryFromURL }) => {
 const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -40,7 +41,8 @@ const pathname = usePathname();
       <div><OverviewBelow /></div>
       <div id="configuration"><Configuration /></div>
       <div id="amenities"><Amenties /></div>
-      <div><AmentiesBelowSlider/></div>
+      {/* <div><AmentiesBelowSlider/></div> */}
+      <BigImage/>
       <div><LocationAbove /></div>
       <div id="location"><Location /></div>
       <div><LocationBelow /></div>

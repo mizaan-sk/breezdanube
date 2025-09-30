@@ -130,7 +130,7 @@ export default function BigImage() {
   return (
     <div className="w-full bg-black">
       {/* Main Image Section */}
-      <div className="relative w-full aspect-[16/6] overflow-hidden">
+      <div className="relative w-full aspect-[11/9] md:aspect-[16/6] overflow-hidden">
        <Image
              src={getImageSrc(images[selectedImage])}
           alt={images[selectedImage].alt}

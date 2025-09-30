@@ -64,7 +64,7 @@ export default function Gallery_Section() {
   );
 
   return (
-    <div className="max-w-[1390px] mx-auto px-4 py-7 md:py-10 md:mb-5 bg-white">
+    <div className="max-w-[1390px] mx-auto px-4 py-7 md:py-10 md:mb-5 bg-black">
       {/* Header */}
       <div className="text-center mb-5 md:mb-7">
         <div className="w-14 md:w-18 mx-auto mb-2">

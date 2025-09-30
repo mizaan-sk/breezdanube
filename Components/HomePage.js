@@ -19,6 +19,8 @@ import { usePathname } from "next/navigation";
 import { pageview } from '@/lib/gtm'
 import EnquireNowButton from './EnquireNowButton'
 import BigImage from './BigImage'
+import MaritimeCitySection from './MaritimeCitySection'
+import WhyInvest from './WhyInvest'
 const HomePage = ({ countryFromURL }) => {
 const pathname = usePathname();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,9 +46,12 @@ const pathname = usePathname();
       {/* <div><AmentiesBelowSlider/></div> */}
       <BigImage/>
       <div><LocationAbove /></div>
-      <div id="location"><Location /></div>
+      <div id="location"><MaritimeCitySection /></div> 
       <div><LocationBelow /></div>
-      <div id="gallery"><Gallery_Section /></div>
+      <div className='bg-black'>
+        <div id="gallery"><Gallery_Section /></div>
+      <WhyInvest/>
+      </div>
       <div><AboutAbove /></div>
       <div id="about"><About /></div>
       <div id="contact"><ContactUs countryFromURL={countryFromURL}/></div>

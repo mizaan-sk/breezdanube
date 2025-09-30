@@ -22,11 +22,11 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const GTM_ID = "GTM-P684SB29";
+const GTM_ID = "GTM-KN5674ZD";
 
 export const metadata = {
-  title: "Sobha Central Dubai – New Launch on Sheikh Zayed Road | Sobha Realty",
-  description: "Explore Sobha Central, the latest Sobha Dubai launch on Sheikh Zayed Road. Discover luxury residences, premium amenities, and investment opportunities with Sobha Realty.",
+  title: "Breez by Danube",
+  description: "Breez by DANUBE, danube Breez, Breez danube, danube properties, Breez.",
     icons: {
     icon: 'favicon.ico', 
   },

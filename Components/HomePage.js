@@ -2,7 +2,6 @@
 import About from '@/Components/About'
 import AboutAbove from '@/Components/AboutAbove'
 import Amenties from '@/Components/Amenties'
-import AmentiesBelowSlider from '@/Components/AmentiesBelowSlider'
 import Configuration from '@/Components/Configuration'
 import ContactUs from '@/Components/ContactUs'
 import Gallery_Section from '@/Components/Gallery_Section'
@@ -42,9 +41,9 @@ const pathname = usePathname();
       <div id="overview"><Overview /></div>
       <div><OverviewBelow /></div>
       <div id="configuration"><Configuration /></div>
-      <div id="amenities"><Amenties /></div>
+      <div><Amenties /></div>
       {/* <div><AmentiesBelowSlider/></div> */}
-      <BigImage/>
+           <div id="amenities"> <BigImage/></div>
       <div><LocationAbove /></div>
       <div id="location"><MaritimeCitySection /></div> 
       <div><LocationBelow /></div>

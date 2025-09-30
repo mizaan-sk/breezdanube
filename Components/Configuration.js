@@ -6,13 +6,18 @@ import Modal from "./Modal";
 const configurations = [
   {
     type: "1 Bed",
-    area: "568",
+    area: "603",
     image: "/danube/conf1.webp",
   },
   {
     type: "2 Bed",
-    area: "936",
+    area: "1029",
     image: "/danube/conf2.webp",
+  },
+  {
+    type: "3 Bed",
+    area: "1769",
+    image: "/danube/interior2.webp",
   },
 ];
 

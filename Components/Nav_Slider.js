@@ -11,17 +11,22 @@ import Navbar from "./Navbar";
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 const Desktop_Slider = [
-  { src: "/assets/WebBan4.webp", alt: 'slide1' },
-  { src: "/assets/WebBan2.webp", alt: 'slide2' },
-  { src: "/assets/WebBan3.webp", alt: 'slide3' },
-  { src: "/assets/WebBan1.webp", alt: 'slide4' },
+  { src: "/danube/deskban1.webp", alt: 'slide1' },
+  { src: "/danube/deskban2.webp", alt: 'slide2' },
+  { src: "/danube/deskban4.webp", alt: 'slide4' },
+  { src: "/danube/deskban5.webp", alt: 'slide5' },
+  { src: "/danube/deskban3.webp", alt: 'slide3' },
+  { src: "/danube/deskban6.webp", alt: 'slide6' },
+
 ];
 
 const Mobile_Slider = [
-  { src: "/assets/MobBan1.webp", alt: 'slide5' },
-  { src: "/assets/MobBan2.webp", alt: 'slide6' },
-  { src: "/assets/MobBan3.webp", alt: 'slide7' },
-  { src: "/assets/MobBan4.webp", alt: 'slide8' },
+  { src: "/danube/mobban6.webp", alt: 'slide12' },
+  { src: "/danube/mobban2.webp", alt: 'slide8' },
+  { src: "/danube/mobban4.webp", alt: 'slide10' },
+  { src: "/danube/mobban1.webp", alt: 'slide7' },
+  { src: "/danube/mobban3.webp", alt: 'slide9' },
+  { src: "/danube/mobban5.webp", alt: 'slide11' },
 ];
 
 export default function Nav_Slider() {

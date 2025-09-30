@@ -7,7 +7,7 @@ const AboutAbove = () => {
      <section className="relative w-full h-[35vh] md:h-[60vh] overflow-hidden">
                   {/* Background Image */}
                   <Image
-                    src="/assets/AboutAboveImage.webp"
+                    src="/danube/bg3.webp"
                     alt="Luxury Pool View"
                     fill
                     priority
@@ -15,7 +15,7 @@ const AboutAbove = () => {
                   />
           
                   {/* Overlay Content */}
-                  <div className="absolute inset-0 bg-black/40 md:-mt-17  flex flex-col items-center justify-center px-4 text-center z-10">
+                  <div className="absolute inset-0 bg-black/70 md:-mt-17  flex flex-col items-center justify-center px-4 text-center z-10">
                     <Image
                       src="/assets/Banner_Logo.webp"
                       alt="Logo"
@@ -23,8 +23,8 @@ const AboutAbove = () => {
                       height={100}
                       className="md:-mb-35 -mb-5 md:w-49 w-35 opacity-70"
                     />
-                    <h1 className="text-white text-xl z-10 font-sans sm:text-2xl md:text-2xl lg:text-4xl tracking-[6px] md:mt-0 -mt-[80px] font-medium ">
-                    Live Artfully. Play Freely
+                    <h1 className="text-white uppercase text-xl z-10  sm:text-2xl md:text-2xl lg:text-4xl tracking-[6px] md:mt-0 -mt-[80px]">
+                    Inspired by the Ocean’s Rhythm
                     </h1>
                   </div>
                 </section>

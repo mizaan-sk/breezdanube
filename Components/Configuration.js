@@ -7,12 +7,12 @@ const configurations = [
   {
     type: "1 Bed",
     area: "568",
-    image: "/assets/Conf1.webp",
+    image: "/danube/conf1.webp",
   },
   {
     type: "2 Bed",
     area: "936",
-    image: "/assets/Conf2.webp",
+    image: "/danube/conf2.webp",
   },
 ];
 
@@ -31,7 +31,7 @@ const Configuration = () => {
               alt="Slider Logo"
             />
           </div>
-          <h1 className="md:text-4xl text-[28px] font-normal font-serif tracking-wide text-[#333333]">
+          <h1 className="md:text-4xl text-[28px] font-normal font-serif tracking-wide text-[#0F4977]">
             CONFIGURATION
           </h1>
           <span className="mt-2 w-16 h-[2px] bg-[#E2BB6C]"></span>

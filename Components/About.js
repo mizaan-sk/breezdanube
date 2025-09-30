@@ -14,21 +14,20 @@ const About = () => {
               alt="Sliders Logo"
             />
           </div>
-          <h2 className="text-2xl md:text-3xl font-extralight text-gray-800 tracking-wide mb-2">
+          <h2 className="text-2xl md:text-3xl font-extralight text-[#0F4977] tracking-wide mb-2">
             ABOUT US
           </h2>
           <div className="w-12 h-0.5 bg-yellow-500 mx-auto mb-6"></div>
 
           <p className="text-[#535353] font-sans text-sm md:text-base/7 font-light leading-relaxed">
-            Sobha Realty redefines the concept of luxury residential living with
-            a repertoire of real estate projects across Dubai. With razor-sharp
-            focus on quality and innovation, it has created a plethora of iconic
-            spaces such as extravagant palaces, ornate mosques, cutting-edge
-            campuses, and ultra-luxurious communities with grand villas and
-            apartments. Pioneering the ‘Backward Integration’ model in real
-            estate, Sobha Realty employs in-house mastery to create a unique
-            offering of fine living that extends beyond the customer’s
-            expectations.
+          At Breez, every material is carefully
+handpicked and thoughtfully curated.
+From the elegance of marble and the natural
+warmth of travertine, to the sophistication of
+fluted glass and leather-finish cladding -
+each element comes with a stamp of luxury.
+This is a home where craftsmanship
+meets contemporary design
           </p>
         </div>
       </section>

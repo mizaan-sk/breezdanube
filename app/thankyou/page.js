@@ -1,11 +1,12 @@
 import Navbar from "@/Components/Navbar";
+import ThNavbar from "@/Components/ThNavbar";
 import Link from "next/link";
 import React from 'react'
 
 const page = () => {
   return (
     <>
-        <Navbar/>
+        <ThNavbar/>
     <div style={{ minHeight: '90vh' }} className="flex items-center absoulte top-0 z-100 justify-center bg-white text-black p-4">
       <div className="text-center">
         <div className="bg-black p-4 rounded-full w-16 h-16 mx-auto mb-6">
@@ -15,7 +16,7 @@ const page = () => {
         <p className="mb-2 text-lg font-medium">Greetings from Sobha Central.</p>
         <p className="mb-6">Thank you for expressing interest. Our expert will contact you shortly.</p>
         <Link href="/" passHref>
-          <div className="inline-block bg-yellow-600 hover:bg-yellow-700 text-white font-semibold px-6 py-3 rounded-full cursor-pointer">
+          <div className="inline-block bg-[#0F4977] hover:bg-[#0e3352] text-white font-semibold px-6 py-3 rounded-full cursor-pointer">
             ⬅ GO BACK TO HOME
           </div>
         </Link>

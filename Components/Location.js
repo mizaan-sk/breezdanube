@@ -102,12 +102,12 @@ const Location = () => {
 
 
         {/* Google Map Button */}
-        <button
+        {/* <button
           onClick={handleClick}
           className="mt-6 border-2 rounded uppercase tracking-wide md:text-[20px] text-[15px] cursor-pointer px-6 py-2 border-[#C39F3D] text-[#C39F3D] hover:bg-[#C39F3D] hover:text-white transition-colors duration-200"
         >
           View Google Map
-        </button>
+        </button> */}
       </div>
 
       {/* Google Map Modal */}

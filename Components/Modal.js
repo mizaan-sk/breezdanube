@@ -50,19 +50,24 @@ export default function Modal({ countryFromURL, onClose, isOpen }) {
     if (typeof window !== "undefined") {
       const query = new URLSearchParams(window.location.search);
       const keys = [
-        "utm_source", "utm_ad", "utm_campaign", "utm_placement",
-        "utm_keyword", "gclid", "fbclid"
+        "utm_source",
+        "utm_ad",
+        "utm_campaign",
+        "utm_placement",
+        "utm_keyword",
+        "gclid",
+        "fbclid",
       ];
       const extracted = {};
       keys.forEach((key) => {
-      const urlValue = query.get(key);
-      if (urlValue) {
-        extracted[key] = urlValue;
-        localStorage.setItem(key, urlValue);
-      } else {
-        extracted[key] = localStorage.getItem(key) || "";
-      }
-    });
+        const urlValue = query.get(key);
+        if (urlValue) {
+          extracted[key] = urlValue;
+          localStorage.setItem(key, urlValue);
+        } else {
+          extracted[key] = localStorage.getItem(key) || "";
+        }
+      });
       setTrackingParams(extracted);
     }
   }, []);
@@ -74,15 +79,16 @@ export default function Modal({ countryFromURL, onClose, isOpen }) {
       name: "",
       phone: "",
       email: "",
+      formtype: "Popup Form",
     },
     validationSchema: Yup.object({
       name: Yup.string().required("Name is required"),
-     phone: Yup.string()
-  .required("Phone number is required")
-  .test("is-valid-phone", "Phone number is invalid", value => {
-    const digitsOnly = value.replace(/\D/g, ""); // remove non-digits
-    return digitsOnly.length >= 10 && digitsOnly.length <= 15;
-  }),
+      phone: Yup.string()
+        .required("Phone number is required")
+        .test("is-valid-phone", "Phone number is invalid", (value) => {
+          const digitsOnly = value.replace(/\D/g, ""); // remove non-digits
+          return digitsOnly.length >= 10 && digitsOnly.length <= 15;
+        }),
       email: Yup.string().email("Invalid email").required("Email is required"),
     }),
     onSubmit: async (values, { resetForm }) => {
@@ -93,15 +99,17 @@ export default function Modal({ countryFromURL, onClose, isOpen }) {
         name: values.name,
         mobile: `+${values.phone}`,
         email: values.email,
+        formtype: values.formtype,
         ...trackingParams,
       };
 
       try {
         await fetch(
-          "https://script.google.com/macros/s/AKfycbzyV65VjevZ4lxvEFE_JmhT4PUMjVq79Te524VR4so_wxe49wiT7qec107J3AGcI_VL/exec",
+          "https://script.google.com/macros/s/AKfycbxSpvEPceUzBSiDcryTOTjOTxisfHIAeVbqkjR551m3hbmb6O77x57xeZzqtMf33U9w/exec",
           {
             method: "POST",
             body: JSON.stringify(fullData),
+            mode: "no-cors",
           }
         );
 
@@ -162,7 +170,12 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
         </button>
 
         <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-md">
-          <Image src="/assets/Banner_Logo.webp" alt="Logo" width={40} height={40} />
+          <Image
+            src="/assets/Banner_Logo.webp"
+            alt="Logo"
+            width={40}
+            height={40}
+          />
         </div>
 
         <div className="mt-5 text-center">
@@ -175,12 +188,20 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
         </div>
 
         {status && (
-          <div className={`text-center font-medium my-4 text-sm ${status.includes("success") ? "text-green-500" : "text-red-500"}`}>
+          <div
+            className={`text-center font-medium my-4 text-sm ${
+              status.includes("success") ? "text-green-500" : "text-red-500"
+            }`}
+          >
             {status}
           </div>
         )}
+        <input type="hidden" name="formtype" value="Popup Form" />
 
-        <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4 mt-4">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="flex flex-col gap-4 mt-4"
+        >
           <div className="flex items-center gap-4 md:flex-row flex-col justify-between">
             <div className="flex flex-col w-full">
               <div className="flex items-center bg-white rounded-md overflow-hidden">
@@ -198,7 +219,9 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
                 />
               </div>
               {formik.touched.name && formik.errors.name && (
-                <div className="text-red-500 mt-[2px] text-sm ml-2">{formik.errors.name}</div>
+                <div className="text-red-500 mt-[2px] text-sm ml-2">
+                  {formik.errors.name}
+                </div>
               )}
             </div>
 
@@ -208,28 +231,28 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
                   <FaPhoneAlt className="text-[#D2A23A]" />
                 </div>
                 <div className="flex-1">
-                 <PhoneInput
-  country={phoneCountry}
-  value={formik.values.phone}
-  onChange={(value) => formik.setFieldValue("phone", value)}
-  inputProps={{
-    name: "phone",
-    required: true,
-    onBlur: () => formik.setFieldTouched("phone", true),
-  }}
-  enableSearch
-  disableAreaCodes={true}
-  enableLongNumbers={true}
-  isValid={(value, country) => {
-    const digits = value.replace(/\D/g, "");
-    return digits.length >= 10 && digits.length <= 15;
-  }}
-  containerClass="flex-1 !bg-transparent !border-0"
-  inputClass="!w-full !text-[15px] !font-[400] !font-oswald !bg-transparent !shadow-none !text-black !border-none focus:!ring-0 focus:!outline-none"
-  buttonClass="!bg-transparent !border-0"
-  dropdownClass="!text-black"
-/>
-{/* <PhoneInput
+                  <PhoneInput
+                    country={phoneCountry}
+                    value={formik.values.phone}
+                    onChange={(value) => formik.setFieldValue("phone", value)}
+                    inputProps={{
+                      name: "phone",
+                      required: true,
+                      onBlur: () => formik.setFieldTouched("phone", true),
+                    }}
+                    enableSearch
+                    disableAreaCodes={true}
+                    enableLongNumbers={true}
+                    isValid={(value, country) => {
+                      const digits = value.replace(/\D/g, "");
+                      return digits.length >= 10 && digits.length <= 15;
+                    }}
+                    containerClass="flex-1 !bg-transparent !border-0"
+                    inputClass="!w-full !text-[15px] !font-[400] !font-oswald !bg-transparent !shadow-none !text-black !border-none focus:!ring-0 focus:!outline-none"
+                    buttonClass="!bg-transparent !border-0"
+                    dropdownClass="!text-black"
+                  />
+                  {/* <PhoneInput
   country={phoneCountry}
   value={formik.values.phone}
   onChange={(value) => formik.setFieldValue("phone", value)}
@@ -246,12 +269,12 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
     return digits.length >= 10 && digits.length <= 15;
   }}
 /> */}
-
-
                 </div>
               </div>
               {formik.touched.phone && formik.errors.phone && (
-                <div className="text-red-500 mt-[2px] text-sm ml-2">{formik.errors.phone}</div>
+                <div className="text-red-500 mt-[2px] text-sm ml-2">
+                  {formik.errors.phone}
+                </div>
               )}
             </div>
           </div>
@@ -272,7 +295,9 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
               />
             </div>
             {formik.touched.email && formik.errors.email && (
-              <div className="text-red-500 mt-[2px] text-sm ml-2">{formik.errors.email}</div>
+              <div className="text-red-500 mt-[2px] text-sm ml-2">
+                {formik.errors.email}
+              </div>
             )}
           </div>
 
@@ -281,7 +306,9 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
               type="submit"
               disabled={isSubmitting}
               className={`w-full max-w-[125px] py-[6px] cursor-pointer font-semibold rounded-md text-white tracking-widest text-lg transition duration-200 ${
-                isSubmitting ? "bg-gray-400" : "bg-[#D2A23A] hover:bg-yellow-600"
+                isSubmitting
+                  ? "bg-gray-400"
+                  : "bg-[#D2A23A] hover:bg-yellow-600"
               }`}
             >
               {isSubmitting ? "Submitting..." : "SUBMIT"}

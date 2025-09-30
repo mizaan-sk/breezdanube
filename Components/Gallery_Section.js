@@ -11,17 +11,19 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/thumbs';
 import 'swiper/css/free-mode';
+import Modal from "./Modal";
 
 export default function Gallery_Section() {
   const [activeTab, setActiveTab] = useState("interior");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
 
   const interiorImages = [
-    "/assets/08.webp",
-    "/assets/10.webp",
-    "/assets/09.webp",
+    "/danube/interior1.webp",
+    "/danube/interior2.webp",
+    "/danube/interior3.webp",
   ];
   
   const planImages = [
@@ -74,7 +76,7 @@ export default function Gallery_Section() {
             alt="Gallery Logo"
           />
         </div>
-        <h2 className="text-2xl md:text-3xl font-extralight text-[#333333] tracking-wider mb-1">
+        <h2 className="text-2xl md:text-3xl font-extralight text-[#0F4977] tracking-wider mb-1">
           GALLERY
         </h2>
         <div className="w-12 h-0.5 bg-yellow-500 mx-auto"></div>
@@ -105,40 +107,50 @@ export default function Gallery_Section() {
 
 
       {/* Image Grid */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeTab}
-          initial="hidden"
-          animate="visible"
-          exit="exit"
-          variants={variants}
-          transition={{ duration: 0.4 }}
-          className={`${
-            activeTab === "plans"
-              ? "flex justify-center flex-wrap gap-4 md:gap-6"
-              : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
-          }`}
-        >
-          {images.map((src, i) => (
-            <div
-              key={i}
-              onClick={() => openSlider(i)}
-              className="group relative w-full max-w-[460px] mx-auto h-64 sm:h-72 md:h-80 lg:h-94 rounded-xl overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300"
-            >
-              <Image
-                src={src}
-                alt={`Gallery ${i + 1}`}
-                fill
-                className="object-cover transition-transform duration-500 group-hover:scale-110"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              />
-              <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
-                <PlusIcon />
-              </div>
-            </div>
-          ))}
-        </motion.div>
-      </AnimatePresence>
+      {/* Image Grid */}
+<AnimatePresence mode="wait">
+  <motion.div
+    key={activeTab}
+    initial="hidden"
+    animate="visible"
+    exit="exit"
+    variants={variants}
+    transition={{ duration: 0.4 }}
+    className={`${
+      activeTab === "plans"
+        ? "flex justify-center flex-wrap gap-4 md:gap-6"
+        : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
+    }`}
+  >
+    {images.map((src, i) => (
+  <div
+    key={i}
+    onClick={() => {
+      if (activeTab === "plans") {
+        setModalOpen(true); // open floor plan modal
+      } else {
+        openSlider(i); // open gallery slider
+      }
+    }}
+    className="group relative w-full max-w-[460px] mx-auto h-64 sm:h-72 md:h-80 lg:h-94 rounded-xl overflow-hidden shadow-md cursor-pointer hover:shadow-lg transition-shadow duration-300"
+  >
+    <Image
+      src={src}
+      alt={`Gallery ${i + 1}`}
+      fill
+      className={`object-cover transition-transform duration-500 group-hover:scale-110 
+        ${activeTab === "plans" ? "blur-[2px]" : ""}`}
+      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+    />
+    <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-300">
+      <PlusIcon />
+    </div>
+  </div>
+))}
+
+  </motion.div>
+</AnimatePresence>
+
 
       {/* Modal Slider with Swiper */}
       <AnimatePresence>
@@ -281,6 +293,8 @@ export default function Gallery_Section() {
           opacity: 0.3;
         }
       `}</style>
+            {modalOpen && <Modal onClose={() => setModalOpen(false)} isOpen={modalOpen} />}
+      
     </div>
   );
 }

@@ -78,10 +78,11 @@ export default function ContactForm({ countryFromURL }) {
 
     try {
       await fetch(
-        "https://script.google.com/macros/s/AKfycbzyV65VjevZ4lxvEFE_JmhT4PUMjVq79Te524VR4so_wxe49wiT7qec107J3AGcI_VL/exec",
+        "https://script.google.com/macros/s/AKfycbxSpvEPceUzBSiDcryTOTjOTxisfHIAeVbqkjR551m3hbmb6O77x57xeZzqtMf33U9w/exec",
         {
           method: "POST",
           body: JSON.stringify(payload),
+          mode: "no-cors",
         }
       );
 
@@ -136,7 +137,7 @@ UTM Keywords: ${utm_keyword || ""}`,
   return (
     <div
       className="relative bg-cover bg-center"
-      style={{ backgroundImage: "url('/assets/ContImage.webp')" }}
+      style={{ backgroundImage: "url('/danube/bg7.webp')" }}
     >
       <div className="absolute inset-0 bg-black/60" />
       <div className="relative z-10 flex flex-col items-center justify-center text-white px-4 py-12 md:py-16">
@@ -150,7 +151,7 @@ UTM Keywords: ${utm_keyword || ""}`,
               className="opacity-70"
             />
           </div>
-          <h2 className="text-3xl mb-2 font-extralight">CONTACT US</h2>
+          <h2 className="text-3xl mb-2  font-extralight">CONTACT US</h2>
           <div className="h-1 w-24 bg-yellow-500 mx-auto mb-4" />
           <p className="text-sm md:text-base font-extralight">
             Please Enter Your Details To Know More About Sobha Central
@@ -162,6 +163,7 @@ UTM Keywords: ${utm_keyword || ""}`,
             name: "",
             mobile: "",
             email: "",
+            formtype: "Contact Form",
             ...trackingParams,
           }}
           validationSchema={ContactSchema}
@@ -184,7 +186,6 @@ UTM Keywords: ${utm_keyword || ""}`,
                     className="text-red-400 text-sm mt-1"
                   />
                 </div>
-
                 <div className="relative flex-1">
                   <div className="flex items-center bg-white text-black rounded-md border px-3 py-[5.5px]">
                     <FaPhoneAlt className="text-[#D2A23A] mr-2" />

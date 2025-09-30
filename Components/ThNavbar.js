@@ -6,7 +6,7 @@ import { RxHamburgerMenu, RxCross2 } from "react-icons/rx"
 import Modal from "@/Components/Modal"
 import Link from "next/link"
 
-const Navbar = () => {
+const ThNavbar = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -60,9 +60,7 @@ const Navbar = () => {
     <>
    {/* Navbar */}
       <div
-        className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-          scrolled ? "bg-black/60 shadow-md " : "bg-transparent"
-        }`}
+        className="fixed top-0 left-0 w-full z-50 transition-all duration-300 bg-black/60 shadow-md"
       >
         <div className="flex items-center justify-between container mx-auto px-4 md:px-10 py-3 md:py-4">
           <div>
@@ -193,4 +191,4 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+export default ThNavbar

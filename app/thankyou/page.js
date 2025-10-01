@@ -13,7 +13,7 @@ const page = () => {
           <span className="text-white text-3xl font-bold">✔</span>
         </div>
         <h1 className="text-3xl font-bold mb-4">You are all set!</h1>
-        <p className="mb-2 text-lg font-medium">Greetings from Sobha Central.</p>
+        <p className="mb-2 text-lg font-medium">Greetings from Danube Properties.</p>
         <p className="mb-6">Thank you for expressing interest. Our expert will contact you shortly.</p>
         <Link href="/" passHref>
           <div className="inline-block bg-[#C39F3D] hover:bg-[#614816] text-white font-semibold px-6 py-3 rounded-full cursor-pointer">

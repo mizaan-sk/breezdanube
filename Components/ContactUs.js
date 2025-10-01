@@ -40,18 +40,23 @@ export default function ContactForm({ countryFromURL }) {
   const pathname = usePathname();
 
   const countryCodeMap = {
-    canada: "ca",
-    usa: "us",
-    india: "in",
-    dubai: "ae",
-    uae: "ae",
-    uk: "gb",
-    london: "gb",
-    birhim: "bh",
-    birmingham: "gb",
-    france: "fr",
-    paris: "fr",
-    germany: "de",
+      canada: "ca",
+  usa: "us",
+  india: "in",
+  dubai: "ae",
+  uae: "ae",
+  uk: "gb",
+  london: "gb",
+  birhim: "bh",      
+  birmingham: "gb",
+  france: "fr",
+  paris: "fr",
+  germany: "de",
+  kuwait: "kw",
+  saudi: "sa",
+  saudiarabia: "sa",
+  ksa: "sa",
+  qatar: "qa"
   };
 
   const getPhoneCountryCode = (country) => {
@@ -154,7 +159,7 @@ UTM Keywords: ${utm_keyword || ""}`,
           <h2 className="text-3xl mb-2  font-extralight">CONTACT US</h2>
           <div className="h-1 w-24 bg-yellow-500 mx-auto mb-4" />
           <p className="text-sm md:text-base font-extralight">
-            Please Enter Your Details To Know More About Sobha Central
+            Please Enter Your Details To Know More About Danube Properties.
           </p>
         </div>
 
@@ -215,6 +220,8 @@ UTM Keywords: ${utm_keyword || ""}`,
                       enableSearch
                       disableAreaCodes={true}
                       enableLongNumbers={true}
+                        disableDropdown={true}   // ✅ disables dropdown but keeps flag
+
                       isValid={(value, country) => {
                         const digits = value.replace(/\D/g, "");
                         return digits.length >= 10 && digits.length <= 15;

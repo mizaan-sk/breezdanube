@@ -22,7 +22,7 @@ export default function BigImage() {
     {
       id: 0,
       desktop: "/danube/img1.webp",
-      mobile: "/danube/imgmob1.webp",
+      mobile: "/danube/imgmob3.webp",
       alt: "Breez Lagoon main view with infinity pool",
       title: "Breez Lagoon",
       description:
@@ -31,7 +31,7 @@ export default function BigImage() {
     {
       id: 1,
       desktop: "/danube/img2.webp",
-      mobile: "/danube/imgmob2.webp",
+      mobile: "/danube/imgmob1.webp",
       alt: "Luxury interior lounge area",
       title: "View Dec",
       description:
@@ -40,7 +40,7 @@ export default function BigImage() {
     {
       id: 2,
       desktop: "/danube/img3.webp",
-      mobile: "/danube/imgmob3.webp",
+      mobile: "/danube/imgmob5.webp",
       alt: "Beachside gazebo with ocean view",
       title: "Breez Club House",
       description:
@@ -49,7 +49,7 @@ export default function BigImage() {
     {
       id: 3,
       desktop: "/danube/img4.webp",
-      mobile: "/danube/imgmob4.webp",
+      mobile: "/danube/imgmob2.webp",
       alt: "Infinity pool with loungers",
       title: "Breez 60",
       description: "Enjoy panoramic views from the highest point in Maritime City.",
@@ -57,7 +57,7 @@ export default function BigImage() {
     {
       id: 4,
       desktop: "/danube/img5.webp",
-      mobile: "/danube/imgmob5.webp",
+      mobile: "/danube/imgmob4.webp",
       alt: "Outdoor dining area",
       title: "Hammock",
       description:
@@ -66,7 +66,7 @@ export default function BigImage() {
     {
       id: 5,
       desktop: "/danube/img1.webp",
-      mobile: "/danube/imgmob1.webp",
+      mobile: "/danube/imgmob3.webp",
       alt: "Breez Lagoon main view with infinity pool",
       title: "Breez Lagoon",
       description:
@@ -75,7 +75,7 @@ export default function BigImage() {
     {
       id: 6,
       desktop: "/danube/img2.webp",
-      mobile: "/danube/imgmob2.webp",
+      mobile: "/danube/imgmob1.webp",
       alt: "Luxury interior lounge area",
       title: "View Dec",
       description:
@@ -84,7 +84,7 @@ export default function BigImage() {
     {
       id: 7,
       desktop: "/danube/img3.webp",
-      mobile: "/danube/imgmob3.webp",
+      mobile: "/danube/imgmob5.webp",
       alt: "Beachside gazebo with ocean view",
       title: "Breez Club House",
       description:
@@ -93,7 +93,7 @@ export default function BigImage() {
     {
       id: 8,
       desktop: "/danube/img4.webp",
-      mobile: "/danube/imgmob4.webp",
+      mobile: "/danube/imgmob2.webp",
       alt: "Infinity pool with loungers",
       title: "Breez 60",
       description: "Enjoy panoramic views from the highest point in Maritime City.",
@@ -101,7 +101,7 @@ export default function BigImage() {
     {
       id: 9,
       desktop: "/danube/img5.webp",
-      mobile: "/danube/imgmob5.webp",
+      mobile: "/danube/imgmob4.webp",
       alt: "Outdoor dining area",
       title: "Hammock",
       description:

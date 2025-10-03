@@ -18,23 +18,23 @@ export default function Modal({ countryFromURL, onClose, isOpen }) {
   const [phoneCountry, setPhoneCountry] = useState("ae");
 
   const countryCodeMap = {
-     canada: "ca",
-  usa: "us",
-  india: "in",
-  dubai: "ae",
-  uae: "ae",
-  uk: "gb",
-  london: "gb",
-  birhim: "bh",      
-  birmingham: "gb",
-  france: "fr",
-  paris: "fr",
-  germany: "de",
-  kuwait: "kw",
-  saudi: "sa",
-  saudiarabia: "sa",
-  ksa: "sa",
-  qatar: "qa"
+    canada: "ca",
+    usa: "us",
+    india: "in",
+    dubai: "ae",
+    uae: "ae",
+    uk: "gb",
+    london: "gb",
+    birhim: "bh",
+    birmingham: "gb",
+    france: "fr",
+    paris: "fr",
+    germany: "de",
+    kuwait: "kw",
+    saudi: "sa",
+    saudiarabia: "sa",
+    ksa: "sa",
+    qatar: "qa",
   };
 
   const getPhoneCountryCode = (country) => {
@@ -217,7 +217,12 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
                   name="name"
                   type="text"
                   placeholder="Name"
-                  onChange={formik.handleChange}
+                  onChange={(e) => {
+                    
+                    // Allow only letters and spaces
+                    const value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+                    formik.setFieldValue("name", value);
+                  }}
                   onBlur={formik.handleBlur}
                   value={formik.values.name}
                   className="w-full px-3 py-2 text-[#222222] text-base placeholder:text-[#222222] focus:outline-none"
@@ -236,28 +241,27 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
                   <FaPhoneAlt className="text-[#D2A23A]" />
                 </div>
                 <div className="flex-1">
-            <PhoneInput
-  country={phoneCountry}
-  value={formik.values.phone}
-  onChange={(value) => formik.setFieldValue("phone", value)}
-  inputProps={{
-    name: "phone",
-    required: true,
-    onBlur: () => formik.setFieldTouched("phone", true),
-  }}
-  enableSearch
-  disableAreaCodes={true}
-  enableLongNumbers={true}
-  disableDropdown={true}   // ✅ disables dropdown but keeps flag
-  isValid={(value, country) => {
-    const digits = value.replace(/\D/g, "");
-    return digits.length >= 10 && digits.length <= 15;
-  }}
-  containerClass="flex-1 !bg-transparent !border-0"
-  inputClass="!w-full !text-[15px] !-ml-2 !font-[400] !bg-transparent !shadow-none !text-black !border-none focus:!ring-0 focus:!outline-none"
-  buttonClass="!bg-transparent  !border-none"   // ✅ flag shown, no dropdown
-/>
-
+                  <PhoneInput
+                    country={phoneCountry}
+                    value={formik.values.phone}
+                    onChange={(value) => formik.setFieldValue("phone", value)}
+                    inputProps={{
+                      name: "phone",
+                      required: true,
+                      onBlur: () => formik.setFieldTouched("phone", true),
+                    }}
+                    enableSearch
+                    disableAreaCodes={true}
+                    enableLongNumbers={true}
+                    disableDropdown={true} // ✅ disables dropdown but keeps flag
+                    isValid={(value, country) => {
+                      const digits = value.replace(/\D/g, "");
+                      return digits.length >= 10 && digits.length <= 15;
+                    }}
+                    containerClass="flex-1 !bg-transparent !border-0"
+                    inputClass="!w-full !text-[15px] !-ml-2 !font-[400] !bg-transparent !shadow-none !text-black !border-none focus:!ring-0 focus:!outline-none"
+                    buttonClass="!bg-transparent  !border-none" // ✅ flag shown, no dropdown
+                  />
 
                   {/* <PhoneInput
   country={phoneCountry}

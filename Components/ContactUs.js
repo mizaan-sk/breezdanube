@@ -9,7 +9,9 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 const ContactSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
+  name: Yup.string()
+  .matches(/^[A-Za-z\s]+$/, "Only letters are allowed")
+  .required("Name is required"),
   mobile: Yup.string()
     .required("Phone number is required")
     .test("is-valid-phone", "Phone number is invalid", (value) => {

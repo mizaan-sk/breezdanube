@@ -12,6 +12,8 @@ import { useRouter, usePathname } from "next/navigation";
 export default function Modal({ countryFromURL, onClose, isOpen }) {
   const [trackingParams, setTrackingParams] = useState({});
   const [status, setStatus] = useState("");
+  const [userIp, setUserIp] = useState("");
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const pathname = usePathname(); // ✅ Needed to read the path
 
@@ -74,6 +76,10 @@ export default function Modal({ countryFromURL, onClose, isOpen }) {
         }
       });
       setTrackingParams(extracted);
+      fetch("https://api.ipify.org?format=json")
+        .then((res) => res.json())
+        .then((data) => setUserIp(data.ip))
+        .catch((err) => console.error("Failed to fetch IP:", err));
     }
   }, []);
 
@@ -106,11 +112,12 @@ export default function Modal({ countryFromURL, onClose, isOpen }) {
         email: values.email,
         formtype: values.formtype,
         ...trackingParams,
+        userIp,
       };
 
       try {
         await fetch(
-          "https://script.google.com/macros/s/AKfycbxSpvEPceUzBSiDcryTOTjOTxisfHIAeVbqkjR551m3hbmb6O77x57xeZzqtMf33U9w/exec",
+          "https://script.google.com/macros/s/AKfycbxV50mpjD7CSEUWs3IMYS1othD3yScyKXEwJvBNPaGNtML3wGq70oQ7Prn6zAwpNa4U/exec",
           {
             method: "POST",
             body: JSON.stringify(fullData),
@@ -218,7 +225,6 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
                   type="text"
                   placeholder="Name"
                   onChange={(e) => {
-                    
                     // Allow only letters and spaces
                     const value = e.target.value.replace(/[^A-Za-z\s]/g, "");
                     formik.setFieldValue("name", value);

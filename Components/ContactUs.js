@@ -37,6 +37,7 @@ const extractTrackingParams = () => {
 
 export default function ContactForm({ countryFromURL }) {
   const [trackingParams, setTrackingParams] = useState({});
+  const [userIp, setUserIp] = useState("");
   const [phoneCountry, setPhoneCountry] = useState("ae");
   const router = useRouter();
   const pathname = usePathname();
@@ -78,14 +79,19 @@ export default function ContactForm({ countryFromURL }) {
   useEffect(() => {
     const params = extractTrackingParams();
     setTrackingParams(params);
+    // Fetching UserIp
+     fetch("https://api.ipify.org?format=json")
+    .then((res) => res.json())
+    .then((data) => setUserIp(data.ip))
+    .catch((err) => console.error("Failed to fetch IP:", err));
   }, []);
 
   const handleSubmit = async (values, { resetForm }) => {
-    const payload = { ...values, ...trackingParams };
+    const payload = { ...values, ...trackingParams ,userIp};
 
     try {
       await fetch(
-        "https://script.google.com/macros/s/AKfycbxSpvEPceUzBSiDcryTOTjOTxisfHIAeVbqkjR551m3hbmb6O77x57xeZzqtMf33U9w/exec",
+        "https://script.google.com/macros/s/AKfycbxV50mpjD7CSEUWs3IMYS1othD3yScyKXEwJvBNPaGNtML3wGq70oQ7Prn6zAwpNa4U/exec",
         {
           method: "POST",
           body: JSON.stringify(payload),

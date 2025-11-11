@@ -37,6 +37,11 @@ export default function Modal({ countryFromURL, onClose, isOpen }) {
     saudiarabia: "sa",
     ksa: "sa",
     qatar: "qa",
+    netherland: "nl",
+    holland: "nl",
+    australia: "au",
+    mauritius: "mu",
+    singapore: "sg",
   };
 
   const getPhoneCountryCode = (country) => {

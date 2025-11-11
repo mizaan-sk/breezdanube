@@ -10,8 +10,8 @@ import "react-phone-input-2/lib/style.css";
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string()
-  .matches(/^[A-Za-z\s]+$/, "Only letters are allowed")
-  .required("Name is required"),
+    .matches(/^[A-Za-z\s]+$/, "Only letters are allowed")
+    .required("Name is required"),
   mobile: Yup.string()
     .required("Phone number is required")
     .test("is-valid-phone", "Phone number is invalid", (value) => {
@@ -43,23 +43,28 @@ export default function ContactForm({ countryFromURL }) {
   const pathname = usePathname();
 
   const countryCodeMap = {
-      canada: "ca",
-  usa: "us",
-  india: "in",
-  dubai: "ae",
-  uae: "ae",
-  uk: "gb",
-  london: "gb",
-  birhim: "bh",      
-  birmingham: "gb",
-  france: "fr",
-  paris: "fr",
-  germany: "de",
-  kuwait: "kw",
-  saudi: "sa",
-  saudiarabia: "sa",
-  ksa: "sa",
-  qatar: "qa"
+    canada: "ca",
+    usa: "us",
+    india: "in",
+    dubai: "ae",
+    uae: "ae",
+    uk: "gb",
+    london: "gb",
+    birhim: "bh",
+    birmingham: "gb",
+    france: "fr",
+    paris: "fr",
+    germany: "de",
+    kuwait: "kw",
+    saudi: "sa",
+    saudiarabia: "sa",
+    ksa: "sa",
+    qatar: "qa",
+    netherland: "nl",
+    holland: "nl",
+    australia: "au",
+    mauritius: "mu",
+    singapore: "sg",
   };
 
   const getPhoneCountryCode = (country) => {
@@ -80,14 +85,14 @@ export default function ContactForm({ countryFromURL }) {
     const params = extractTrackingParams();
     setTrackingParams(params);
     // Fetching UserIp
-     fetch("https://api.ipify.org?format=json")
-    .then((res) => res.json())
-    .then((data) => setUserIp(data.ip))
-    .catch((err) => console.error("Failed to fetch IP:", err));
+    fetch("https://api.ipify.org?format=json")
+      .then((res) => res.json())
+      .then((data) => setUserIp(data.ip))
+      .catch((err) => console.error("Failed to fetch IP:", err));
   }, []);
 
   const handleSubmit = async (values, { resetForm }) => {
-    const payload = { ...values, ...trackingParams ,userIp};
+    const payload = { ...values, ...trackingParams, userIp };
 
     try {
       await fetch(
@@ -228,8 +233,7 @@ UTM Keywords: ${utm_keyword || ""}`,
                       enableSearch
                       disableAreaCodes={true}
                       enableLongNumbers={true}
-                        disableDropdown={true}   // ✅ disables dropdown but keeps flag
-
+                      disableDropdown={true} // ✅ disables dropdown but keeps flag
                       isValid={(value, country) => {
                         const digits = value.replace(/\D/g, "");
                         return digits.length >= 10 && digits.length <= 15;

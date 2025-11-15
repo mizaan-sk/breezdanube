@@ -157,7 +157,6 @@ UTM Keywords: ${fullData.utm_keyword || ""}`,
             }),
           }
         );
-
         const crmJson = await crmResponse.json();
         console.log("CRM Response", crmJson);
         resetForm();

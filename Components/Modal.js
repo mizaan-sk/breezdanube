@@ -144,8 +144,8 @@ export default function Modal({ countryFromURL, onClose, isOpen }) {
               mobile: fullData.mobile,
               email: fullData.email,
               source: fullData.utm_source || "Google",
-              campaign: "breez",
-                            // campaign: fullData.utm_campaign || "",
+              // campaign: "breez",
+                            campaign: fullData.utm_campaign || "breez",
               notes: `
 UTM Source: ${fullData.utm_source || ""}
 UTM Campaign: ${fullData.utm_campaign || ""}

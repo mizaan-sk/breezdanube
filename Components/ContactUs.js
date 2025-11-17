@@ -131,8 +131,8 @@ export default function ContactForm({ countryFromURL }) {
             mobile,
             email,
             source: utm_source || "Google",
-       campaign: "breez",
-            // campaign: utm_campaign || "",
+      //  campaign: "breez",
+            campaign: utm_campaign || "breez",
             notes: `
 UTM Source: ${utm_source || ""}
 UTM Campaign: ${utm_campaign || ""}
